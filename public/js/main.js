@@ -21156,97 +21156,177 @@ module.exports = require('./lib/React');
 
 },{"./lib/React":160}],184:[function(require,module,exports){
 var React = require('react');
-var ListItem = require('./ListItem.jsx');
 
-var List = React.createClass({
-  displayName: 'List',
-
-  render: function () {
-
-    var createItem = function (text, index) {
-      return React.createElement(ListItem, { key: index + text, text: text });
-    };
-    return React.createElement(
-      'ul',
-      null,
-      this.props.items.map(createItem)
-    );
-  }
-});
-
-module.exports = List;
-
-},{"./ListItem.jsx":185,"react":183}],185:[function(require,module,exports){
-var React = require('react');
-
-var ListItem = React.createClass({
-  displayName: 'ListItem',
+var Jumbo = React.createClass({
+  displayName: "Jumbo",
 
   render: function () {
     return React.createElement(
-      'li',
-      null,
+      "div",
+      { className: "panel panel-default" },
+      React.createElement("div", { className: "panel-heading" }),
       React.createElement(
-        'h4',
+        "div",
         null,
-        this.props.text
+        React.createElement(
+          "h4",
+          null,
+          this.props.content.text[0].text
+        )
+      ),
+      React.createElement(
+        "div",
+        null,
+        React.createElement(
+          "h4",
+          null,
+          this.props.content.text[1].text
+        )
+      ),
+      React.createElement(
+        "div",
+        null,
+        React.createElement(
+          "h4",
+          null,
+          this.props.content.text[2].text
+        )
       )
     );
   }
 });
 
-module.exports = ListItem;
+module.exports = Jumbo;
 
-},{"react":183}],186:[function(require,module,exports){
+},{"react":183}],185:[function(require,module,exports){
 var React = require('react');
-var List = require('./List.jsx');
+var White = require('./White.jsx');
+var Jumbo = require('./Jumbo.jsx');
+var Special = require('./Special.jsx');
+var Small = require('./Small.jsx');
 
-var ListManager = React.createClass({
-  displayName: 'ListManager',
+var Manager = React.createClass({
+  displayName: 'Manager',
 
-  getInitialState: function () {
-    return { items: [], newItemText: '' };
-  },
-  onChange: function (e) {
-    this.setState({ newItemText: e.target.value });
-  },
-  handleSubmit: function (e) {
-    e.preventDefault();
-    var currentItems = this.state.items;
-    currentItems.push(this.state.newItemText);
-    this.setState({ items: currentItems, newItemText: '' });
-  },
   render: function () {
     return React.createElement(
       'div',
-      null,
+      { className: 'container' },
       React.createElement(
-        'h3',
-        null,
-        this.props.title
-      ),
-      React.createElement(
-        'form',
-        { onSubmit: this.handleSubmit },
-        React.createElement('input', { onChange: this.onChange, value: this.state.newItemText }),
+        'div',
+        { className: 'row' },
         React.createElement(
-          'button',
-          null,
-          'Add'
+          'div',
+          { className: 'col-sm-9' },
+          React.createElement(
+            'div',
+            { className: 'row' },
+            React.createElement(White, { content: this.props.content.white[0], className: 'col-sm-4' }),
+            React.createElement(White, { content: this.props.content.white[1], className: 'col-sm-4' }),
+            React.createElement(White, { content: this.props.content.white[2], className: 'col-sm-4' })
+          ),
+          React.createElement(Jumbo, { content: this.props.content.jumbo[0], className: 'col-sm-4' }),
+          React.createElement(Jumbo, { content: this.props.content.jumbo[1], className: 'col-sm-4' })
+        ),
+        React.createElement(
+          'div',
+          { className: 'col-sm-3' },
+          React.createElement(Special, { content: this.props.content.special }),
+          React.createElement(Small, { content: this.props.content.small[0] }),
+          React.createElement(Small, { content: this.props.content.small[1] }),
+          React.createElement(Small, { content: this.props.content.small[2] })
         )
-      ),
-      React.createElement(List, { items: this.state.items })
+      )
     );
   }
 });
 
-module.exports = ListManager;
+module.exports = Manager;
 
-},{"./List.jsx":184,"react":183}],187:[function(require,module,exports){
+},{"./Jumbo.jsx":184,"./Small.jsx":186,"./Special.jsx":187,"./White.jsx":188,"react":183}],186:[function(require,module,exports){
+var React = require('react');
+
+var Small = React.createClass({
+  displayName: "Small",
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "panel panel-default" },
+      React.createElement("div", { className: "panel-heading" }),
+      React.createElement(
+        "h4",
+        null,
+        this.props.content.text
+      )
+    );
+  }
+});
+
+module.exports = Small;
+
+},{"react":183}],187:[function(require,module,exports){
+var React = require('react');
+
+var Special = React.createClass({
+  displayName: "Special",
+
+  render: function () {
+    var headingStyle = {};
+
+    if (this.props.content.color) {
+      headingStyle.background = this.props.content.color;
+    }
+
+    return React.createElement(
+      "div",
+      { style: headingStyle, className: "panel panel-default" },
+      React.createElement("div", { className: "panel-heading" }),
+      React.createElement(
+        "h4",
+        null,
+        this.props.content.text
+      )
+    );
+  }
+});
+
+module.exports = Special;
+
+},{"react":183}],188:[function(require,module,exports){
+var React = require('react');
+
+var White = React.createClass({
+  displayName: "White",
+
+  render: function () {
+    return React.createElement(
+      "div",
+      { className: "panel panel-default" },
+      React.createElement("div", { className: "panel-heading" }),
+      React.createElement(
+        "h4",
+        null,
+        this.props.content.text
+      )
+    );
+  }
+});
+
+module.exports = White;
+
+},{"react":183}],189:[function(require,module,exports){
 var React = require('react');
 var ReactDOM = require('react-dom');
-var ListManager = require('./components/ListManager.jsx');
+var Manager = require('./components/Manager.jsx');
 
-ReactDOM.render(React.createElement(ListManager, { title: 'ingredients' }), document.getElementById('ingredients'));
+var content = {
+        white: [{ num: "20", text: "New followers added this month" }, { num: "$1250", text: "Average Monthly Income" }, { num: "$13865", text: "Yearly income Goal" }],
+        jumbo: [{ color: '#0096d0', text: [{ num: 15080, text: "Shot Views" }, { num: 12000, text: "Likes" }, { num: 5100, text: "Comments" }] }, { color: '#cd59ae', text: [{ num: 15080, text: "Shot Views" }, { num: 12000, text: "Likes" }, { num: 5100, text: "Comments" }] }],
+        small: [{ color: '#0096d0', text: "New visitors", num: "1.5k" }, { color: '#b28ad6', text: "Bounce Rate", num: "50%" }, { color: '#ff4826', text: "Searchs", num: "28%" }, { color: '#63c254', text: "Traffic", num: "140.5kb" }],
+        special: { color: '#ff8a00', text: "Paris", num: "18°" }
+};
 
-},{"./components/ListManager.jsx":186,"react":183,"react-dom":31}]},{},[187]);
+ReactDOM.render(React.createElement(Manager, { content: content }), document.getElementById('manager'));
+
+},{"./components/Manager.jsx":185,"react":183,"react-dom":31}]},{},[189]);
