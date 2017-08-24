@@ -1,6 +1,6 @@
 var React =  require('react');
 var ReactDOM = require('react-dom');
-var Manager = require('./components/Manager.jsx');
+var List = require('./components/List.jsx');
 
 var content = {
   white:[{num:"20", text:"New followers added this month"},
@@ -16,5 +16,5 @@ var content = {
 }
 
 ReactDOM.render(
-    <Manager content={content} />, document.getElementById('manager')
+    <List />, document.getElementById('manager')
   );
